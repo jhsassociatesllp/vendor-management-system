@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS — Item Codes</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+
+        <h1>Item Codes</h1>
+
+        <div class="card">
+          <h2>Add Item Code</h2>
+          <form id="item-code-form">
+            <label for="category">Category</label>
+            <input type="text" id="category" required />
+
+            <label for="sub_category">Sub-category</label>
+            <input type="text" id="sub_category" required />
+
+            <label for="description">Description</label>
+            <input type="text" id="description" required />
+
+            <label for="unit">Unit</label>
+            <input type="text" id="unit" placeholder="e.g. piece, kg, hour" required />
+
+            <label for="default_rate">Default Rate (INR)</label>
+            <input type="number" id="default_rate" min="0" step="0.01" required />
+
+            <div class="error-text" id="form-error"></div>
+            <button type="submit" class="btn-primary">Add Item Code</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Existing Item Codes</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Sub-category</th>
+                <th>Description</th>
+                <th>Unit</th>
+                <th>Default Rate</th>
+                <th>Active</th>
+              </tr>
+            </thead>
+            <tbody id="item-codes-body">
+              <tr><td colspan="6">Loading&hellip;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/item-codes.js"></script>
+</body>
+</html>

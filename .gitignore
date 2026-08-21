@@ -1,0 +1,10 @@
+# Secrets — never commit real values. Copy .env.example to .env locally/on the VM.
+.env
+
+# Runtime data that shouldn't be in version control
+vpms/uploads/*
+!vpms/uploads/.gitkeep
+
+# OS/editor junk
+.DS_Store
+Thumbs.db

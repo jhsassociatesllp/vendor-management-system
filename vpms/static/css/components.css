@@ -1,0 +1,467 @@
+/* Phase 3 UI additions. Reuses tokens.css values only — no new colors/fonts introduced. */
+
+/* ---------- Workflow timeline (Phase 4 UI, Section 2) ----------
+   L1 -> L2 -> L3 -> L4 -> Payment. States map onto the existing badge colors so this
+   introduces no new palette. is-current gets an extra ring on top of the primary color
+   so "where is this right now" reads at a glance, not just "what's pending". */
+
+.workflow-timeline {
+  display: flex;
+  align-items: flex-start;
+  margin: var(--space-2) 0 var(--space-3) 0;
+  overflow-x: auto;
+}
+
+.workflow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 84px;
+  flex-shrink: 0;
+}
+
+.workflow-step__dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-background);
+  border: 3px solid var(--color-border);
+  box-sizing: border-box;
+}
+
+.workflow-step__label {
+  margin-top: 6px;
+  font-size: var(--text-size-5);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.workflow-step__sublabel {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.workflow-timeline__connector {
+  flex: 1;
+  min-width: 20px;
+  height: 3px;
+  background: var(--color-border);
+  margin-top: 10px;
+}
+
+.workflow-step.is-complete .workflow-step__dot {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+.workflow-step.is-complete .workflow-step__label {
+  color: var(--color-success);
+}
+
+.workflow-step.is-current .workflow-step__dot {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-surface), 0 0 0 5px var(--color-primary);
+}
+.workflow-step.is-current .workflow-step__label {
+  color: var(--color-primary);
+}
+
+.workflow-step.is-pending .workflow-step__dot {
+  background: var(--color-surface);
+  border-color: var(--color-primary);
+}
+.workflow-step.is-pending .workflow-step__label {
+  color: var(--color-primary);
+}
+
+.workflow-step.is-skipped .workflow-step__dot {
+  background: var(--color-background);
+  border-color: var(--color-border);
+}
+.workflow-step.is-skipped .workflow-step__label {
+  color: var(--color-text-muted);
+  font-weight: 400;
+  text-decoration: line-through;
+}
+
+.workflow-step.is-query .workflow-step__dot {
+  background: var(--color-warning);
+  border-color: var(--color-warning);
+}
+.workflow-step.is-query .workflow-step__label {
+  color: var(--color-warning);
+}
+
+.workflow-step.is-returned .workflow-step__dot {
+  background: var(--color-surface);
+  border-color: var(--color-warning);
+}
+.workflow-step.is-returned .workflow-step__label {
+  color: var(--color-warning);
+}
+
+.workflow-step.is-rejected .workflow-step__dot {
+  background: var(--color-danger);
+  border-color: var(--color-danger);
+}
+.workflow-step.is-rejected .workflow-step__label {
+  color: var(--color-danger);
+}
+
+.workflow-step.is-na .workflow-step__dot {
+  background: var(--color-background);
+  border-color: var(--color-border);
+  opacity: 0.5;
+}
+.workflow-step.is-na .workflow-step__label {
+  color: var(--color-text-muted);
+  opacity: 0.5;
+}
+
+/* ---------- KPI cards + charts (Phase 5 UI, Section 2) ----------
+   Reuses the existing .card component — just a large number and a label, per the spec's
+   explicit "natural extension, not a new pattern" instruction. */
+
+.kpi-card__value {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--color-text);
+}
+
+.kpi-card__label {
+  font-size: var(--text-size-4);
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.chart-container {
+  position: relative;
+  height: 280px;
+}
+
+.filter-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: flex-end;
+}
+
+.filter-panel .filter-field {
+  min-width: 160px;
+}
+
+.filter-panel .filter-field label {
+  margin-top: 0;
+}
+
+/* ---------- Report grid (Phase 5 UI, Section 3.2) ---------- */
+
+.report-card__frequency {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+/* ---------- Audit trail (Phase 5 UI, Section 3.4) ----------
+   Intentionally spare — no action column, no buttons in the table itself. */
+
+tr.audit-row {
+  cursor: pointer;
+}
+
+.audit-detail-row td {
+  background: var(--color-background);
+  padding: var(--space-2);
+}
+
+.audit-field-change {
+  display: grid;
+  grid-template-columns: 160px 1fr 24px 1fr;
+  gap: var(--space-1);
+  align-items: center;
+  padding: 4px 0;
+  font-size: var(--text-size-4);
+}
+
+.audit-field-change__name {
+  font-weight: 600;
+}
+
+.audit-field-change__old {
+  color: var(--color-danger);
+  text-decoration: line-through;
+}
+
+.audit-field-change__new {
+  color: var(--color-success);
+}
+
+.integrity-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-card);
+  margin: var(--space-2) 0;
+}
+
+.integrity-banner__icon {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.integrity-banner__text strong {
+  display: block;
+}
+
+.integrity-banner__text span {
+  font-size: var(--text-size-4);
+  color: var(--color-text-muted);
+}
+
+.integrity-banner.is-clean {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.integrity-banner.is-clean .integrity-banner__text span {
+  color: var(--color-success);
+}
+
+.integrity-banner.is-broken {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.integrity-banner.is-broken .integrity-banner__text span {
+  color: var(--color-danger);
+}
+
+/* ---------- DoA Matrix table (Phase 4A UI) ----------
+   Global form inputs default to width:100% with generous padding, sized for full-width
+   form fields — inside a 9-column data table that produces illegible, truncated cells.
+   Scoped overrides give this table's fields sane fixed widths instead. */
+
+.doa-table input,
+.doa-table select {
+  width: auto;
+  padding: 6px 8px;
+  font-size: var(--text-size-4);
+}
+
+.doa-table .f-min,
+.doa-table .f-max {
+  width: 100px;
+}
+
+.doa-table select {
+  min-width: 160px;
+}
+
+.doa-table td {
+  white-space: nowrap;
+}
+
+.hash-cell {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 12px;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Urgency chip (Phase 4 UI, Section 2) ----------
+   Same three-color logic as the budget bar: green on time, amber within the threshold,
+   red overdue. Reused for both TAT due dates (3-day threshold) and MSME payment due
+   dates (7-day threshold). */
+
+.urgency-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.urgency-chip.is-ok {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.urgency-chip.is-warning {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.urgency-chip.is-danger {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+/* ---------- Budget utilization bar (Section 2) ---------- */
+
+.budget-bar {
+  margin: var(--space-2) 0;
+}
+
+.budget-bar__figures {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: var(--text-size-4);
+  margin-bottom: 4px;
+}
+
+.budget-bar__committed-label {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.budget-bar__sanctioned-label {
+  color: var(--color-text-muted);
+}
+
+.budget-bar__track {
+  height: 10px;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.budget-bar__fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 999px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.budget-bar__fill.is-warning {
+  background: var(--color-warning);
+}
+
+.budget-bar__fill.is-danger {
+  background: var(--color-danger);
+}
+
+.budget-bar__available {
+  font-size: var(--text-size-5);
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+/* ---------- Flag tags (Section 3.5 / 4.3) ----------
+   Secondary to the main status badge, so outlined rather than filled and a size
+   smaller. No distinct "info" color exists in tokens.css, so the MSME tag reuses
+   --color-primary outlined rather than introducing one. */
+
+.flag-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid;
+  background: transparent;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+.flag-tag--variance {
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.flag-tag--msme {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* ---------- Multi-step form (vendor-invoice-submit.html) ---------- */
+
+.step-indicator {
+  display: flex;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+
+.step-indicator__item {
+  flex: 1;
+  text-align: center;
+  padding: 8px 4px;
+  border-radius: 6px;
+  font-size: var(--text-size-5);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+}
+
+.step-indicator__item.is-active {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+}
+
+.step-indicator__item.is-done {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.form-step {
+  display: none;
+}
+
+.form-step.is-active {
+  display: block;
+}
+
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-3);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--text-size-4);
+}
+
+.summary-row .summary-label {
+  color: var(--color-text-muted);
+}
+
+.summary-row .summary-value {
+  font-weight: 600;
+  text-align: right;
+}
+
+.doc-required-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-danger);
+}
+
+.doc-optional-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}

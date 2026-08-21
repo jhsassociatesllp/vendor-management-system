@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS — Audit Trail</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+  <link rel="stylesheet" href="/static/css/components.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+
+        <h1>Audit Trail</h1>
+        <p class="hint">Read-only. Every write in the system is logged here — there are no edit or delete controls on this page.</p>
+
+        <div class="card">
+          <div class="filter-panel">
+            <div class="filter-field">
+              <label for="filter-user">User</label>
+              <select id="filter-user"><option value="">All users</option></select>
+            </div>
+            <div class="filter-field">
+              <label for="filter-module">Module</label>
+              <select id="filter-module"><option value="">All modules</option></select>
+            </div>
+            <div class="filter-field">
+              <label for="filter-action">Action</label>
+              <select id="filter-action">
+                <option value="">All actions</option>
+                <option value="Create">Create</option>
+                <option value="Update">Update</option>
+                <option value="Approve">Approve</option>
+                <option value="Reject">Reject</option>
+                <option value="Delete">Delete</option>
+                <option value="View">View</option>
+                <option value="Login">Login</option>
+                <option value="Logout">Logout</option>
+                <option value="Login_Failed">Login Failed</option>
+                <option value="Document_Upload">Document Upload</option>
+                <option value="System">System</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="filter-record-reference">Record Reference</label>
+              <input type="text" id="filter-record-reference" placeholder="e.g. invoice number" />
+            </div>
+            <div class="filter-field">
+              <label for="filter-date-from">Date From</label>
+              <input type="date" id="filter-date-from" />
+            </div>
+            <div class="filter-field">
+              <label for="filter-date-to">Date To</label>
+              <input type="date" id="filter-date-to" />
+            </div>
+            <div class="filter-field">
+              <button type="button" class="btn-primary" id="apply-filters-button">Apply Filters</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Integrity Check</h2>
+            <button type="button" class="btn-secondary" id="integrity-check-button">Run Integrity Check</button>
+          </div>
+          <div id="integrity-result"></div>
+        </div>
+
+        <div class="card">
+          <div id="audit-status" class="hint"></div>
+          <table>
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>User</th>
+                <th>Role</th>
+                <th>Action</th>
+                <th>Module</th>
+                <th>Record</th>
+              </tr>
+            </thead>
+            <tbody id="audit-table-body"></tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/audit-trail.js"></script>
+</body>
+</html>

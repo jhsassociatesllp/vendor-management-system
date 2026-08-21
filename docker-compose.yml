@@ -1,0 +1,46 @@
+# No top-level `name:` on purpose — Compose then derives the project name from the
+# containing directory. Production and staging each get their own checkout in their own
+# directory (see DEPLOYMENT.md), so this is what keeps their containers/volumes/networks
+# from colliding on the same VM without any extra flags.
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-vpms}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      POSTGRES_DB: ${DB_NAME:-vpms}
+    volumes:
+      - vpms_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-vpms}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    # Not published to the host on purpose — only the app container talks to it.
+    # Uncomment to reach it directly from the VM for debugging (e.g. psql, pgAdmin):
+    # ports:
+    #   - "5432:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql+psycopg2://${DB_USER:-vpms}:${DB_PASSWORD:?Set DB_PASSWORD in .env}@db:5432/${DB_NAME:-vpms}"
+      JWT_SECRET_KEY: "${JWT_SECRET_KEY:?Set JWT_SECRET_KEY in .env, e.g. via openssl rand -base64 48}"
+      JWT_ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 60
+    ports:
+      - "${APP_PORT:?Set APP_PORT in .env — 9010 for production, 9020 for staging}:8060"
+    volumes:
+      - vpms_uploads:/app/vpms/uploads
+
+volumes:
+  vpms_pgdata:
+  vpms_uploads:

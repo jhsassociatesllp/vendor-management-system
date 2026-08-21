@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS — Report Viewer</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+  <link rel="stylesheet" href="/static/css/components.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+
+        <a href="/static/pages/reports.html">&larr; Back to Reports</a>
+        <h1 id="report-title">Report</h1>
+        <p class="hint" id="report-description"></p>
+
+        <div class="card">
+          <div class="filter-panel" id="filter-panel"></div>
+          <div style="margin-top: 8px;">
+            <button type="button" class="btn-primary" id="run-report-button">Run Report</button>
+            <button type="button" class="btn-secondary" id="export-csv-button">Export CSV</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div id="report-status" class="hint"></div>
+          <div style="overflow-x: auto;">
+            <table id="report-table">
+              <thead><tr id="report-table-head"></tr></thead>
+              <tbody id="report-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/report-viewer.js"></script>
+</body>
+</html>

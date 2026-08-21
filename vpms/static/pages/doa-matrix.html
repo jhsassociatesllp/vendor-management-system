@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS — DoA Matrix</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+  <link rel="stylesheet" href="/static/css/components.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+        <div id="banner-success" class="banner-success" style="display: none;"></div>
+
+        <h1>DoA Matrix</h1>
+        <div class="hint">Amount slabs that decide which levels an invoice's approval routes through, and each level's TAT.</div>
+
+        <div class="card">
+          <div style="overflow-x: auto;">
+            <table class="doa-table">
+              <thead>
+                <tr>
+                  <th>Min Amount</th>
+                  <th>Max Amount</th>
+                  <th>L2?</th>
+                  <th>L3?</th>
+                  <th>L1 Role</th>
+                  <th>L2 Role</th>
+                  <th>L3 Role</th>
+                  <th>L4 Role</th>
+                  <th>TAT (L1/L2/L3/L4 days)</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="matrix-body">
+                <tr><td colspan="10">Loading&hellip;</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" id="create-card" style="display: none;">
+          <h2>Add Slab</h2>
+          <form id="create-form">
+            <label for="new_min_amount">Min Amount</label>
+            <input type="number" id="new_min_amount" step="0.01" min="0" required />
+            <label for="new_max_amount">Max Amount (blank = no upper limit)</label>
+            <input type="number" id="new_max_amount" step="0.01" min="0" />
+            <div class="checkbox-row">
+              <input type="checkbox" id="new_requires_l2" />
+              <label for="new_requires_l2">Requires L2</label>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="new_requires_l3" />
+              <label for="new_requires_l3">Requires L3</label>
+            </div>
+            <label for="new_l1_role">L1 Role</label>
+            <select id="new_l1_role" required></select>
+            <label for="new_l2_role">L2 Role</label>
+            <select id="new_l2_role"></select>
+            <label for="new_l3_role">L3 Role</label>
+            <select id="new_l3_role"></select>
+            <label for="new_l4_role">L4 Role</label>
+            <select id="new_l4_role" required></select>
+            <div class="error-text" id="create-error"></div>
+            <button type="submit" class="btn-primary">Add Slab</button>
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/doa-matrix.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS Vendor Portal — My Invoices</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+  <link rel="stylesheet" href="/static/css/components.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS Vendor Portal</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h1>My Invoices</h1>
+          <a href="/static/pages/vendor-invoice-submit.html" class="btn-primary" style="text-decoration: none;">Submit Invoice</a>
+        </div>
+
+        <div class="card">
+          <table>
+            <thead>
+              <tr>
+                <th>Invoice Number</th>
+                <th>PO Reference</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Submitted</th>
+              </tr>
+            </thead>
+            <tbody id="invoices-body">
+              <tr><td colspan="5">Loading&hellip;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/vendor-invoices-list.js"></script>
+</body>
+</html>

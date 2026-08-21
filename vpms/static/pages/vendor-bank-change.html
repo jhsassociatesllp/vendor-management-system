@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS Vendor Portal — Bank Change Request</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS Vendor Portal</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+
+        <h1>Bank Detail Change</h1>
+
+        <div class="card">
+          <h2>Submit a Request</h2>
+          <p class="hint">Changes require approval from two different Accounts/Finance reviewers before they take effect.</p>
+          <form id="bank-change-form">
+            <label for="new_account_no">New Account Number</label>
+            <input type="text" id="new_account_no" required />
+
+            <label for="new_ifsc_code">New IFSC Code</label>
+            <input type="text" id="new_ifsc_code" placeholder="HDFC0001234" maxlength="11" required />
+
+            <div class="error-text" id="form-error"></div>
+            <button type="submit" class="btn-primary">Submit Request</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Your Requests</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Requested</th>
+                <th>New Account / IFSC</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="requests-body">
+              <tr><td colspan="3">Loading&hellip;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/vendor-bank-change.js"></script>
+</body>
+</html>

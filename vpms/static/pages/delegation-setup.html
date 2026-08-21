@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS — Delegations</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+  <link rel="stylesheet" href="/static/css/components.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+        <div id="banner-success" class="banner-success" style="display: none;"></div>
+
+        <h1>Delegations</h1>
+
+        <div class="card">
+          <h2>Delegate My Approvals</h2>
+          <div class="hint">Let another user act on your pending approval items for a fixed date range.</div>
+          <form id="delegation-form">
+            <label for="delegate_user_id">Delegate To</label>
+            <select id="delegate_user_id" required>
+              <option value="">Loading users&hellip;</option>
+            </select>
+
+            <label for="valid_from">Valid From</label>
+            <input type="date" id="valid_from" required />
+
+            <label for="valid_to">Valid To</label>
+            <input type="date" id="valid_to" required />
+
+            <div class="error-text" id="form-error"></div>
+            <button type="submit" class="btn-primary">Create Delegation</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>My Delegations</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Direction</th>
+                <th>User</th>
+                <th>Valid From</th>
+                <th>Valid To</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="delegations-body">
+              <tr><td colspan="5">Loading&hellip;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/delegation-setup.js"></script>
+</body>
+</html>

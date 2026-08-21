@@ -1,0 +1,17 @@
+name: vpms_v2
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: vpms_v2
+      POSTGRES_PASSWORD: vpms_v2
+      POSTGRES_DB: vpms_v2
+    ports:
+      - "5434:5432"
+    volumes:
+      - vpms_v2_pgdata:/var/lib/postgresql/data
+      - ./scripts/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql
+
+volumes:
+  vpms_v2_pgdata:

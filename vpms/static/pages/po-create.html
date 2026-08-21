@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS — New Purchase Order</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+  <link rel="stylesheet" href="/static/css/components.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+
+        <h1>New Purchase Order</h1>
+
+        <form id="po-form">
+          <div class="card">
+            <h2>Vendor &amp; Item</h2>
+
+            <label for="vendor_id">Vendor</label>
+            <select id="vendor_id" required>
+              <option value="">Select a vendor&hellip;</option>
+            </select>
+
+            <label for="item_code_id">Item Code</label>
+            <select id="item_code_id" required disabled>
+              <option value="">Select a vendor first&hellip;</option>
+            </select>
+            <div class="hint">Only item codes with an active vendor-item combination are shown.</div>
+
+            <div id="agreement-area"></div>
+          </div>
+
+          <div class="card">
+            <h2>Budget Head</h2>
+            <label for="budget_head_id">Budget Head</label>
+            <select id="budget_head_id" required>
+              <option value="">Select a budget head&hellip;</option>
+            </select>
+            <div id="budget-bar-area"></div>
+          </div>
+
+          <div class="card">
+            <h2>Quantity &amp; Rate</h2>
+
+            <label for="description">Description</label>
+            <textarea id="description" required></textarea>
+
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" min="0.01" step="0.01" required />
+
+            <label for="rate">Rate (INR)</label>
+            <input type="number" id="rate" min="0.01" step="0.01" required disabled />
+            <div class="hint" id="rate-hint">Select an item code to pre-fill the rate from its active rate card.</div>
+
+            <div id="rate-override-area" style="display: none;">
+              <label for="rate_override_reason">Reason for rate override (required)</label>
+              <textarea id="rate_override_reason"></textarea>
+            </div>
+
+            <label for="delivery_completion_date">Delivery / Completion Date</label>
+            <input type="date" id="delivery_completion_date" required />
+
+            <label for="po_validity_date">PO Validity Date</label>
+            <input type="date" id="po_validity_date" required />
+
+            <div class="card" id="totals-preview" style="background: var(--color-background); box-shadow: none;">
+              <div class="field-row"><span class="field-label">Taxable Amount (preview)</span><span class="field-value" id="preview-taxable">&mdash;</span></div>
+              <div class="field-row"><span class="field-label">GST (preview)</span><span class="field-value" id="preview-gst">&mdash;</span></div>
+              <div class="field-row"><span class="field-label">Total incl. GST (preview)</span><span class="field-value" id="preview-total">&mdash;</span></div>
+              <div class="hint">Server-recomputed and re-verified at submission — this is only a live preview.</div>
+            </div>
+          </div>
+
+          <div class="card" id="over-budget-card" style="display: none;">
+            <h2>Budget Exceeded</h2>
+            <div class="banner-error" id="over-budget-message"></div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="request-exception" />
+              <label for="request-exception">Request an over-budget exception</label>
+            </div>
+            <div id="justification-area" style="display: none;">
+              <label for="over_budget_justification">Justification (required)</label>
+              <textarea id="over_budget_justification"></textarea>
+              <div class="hint">This still requires approval — it is not auto-approved.</div>
+            </div>
+          </div>
+
+          <div class="error-text" id="form-error"></div>
+          <button type="submit" class="btn-primary" id="submit-button">Create Purchase Order</button>
+        </form>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/po-create.js"></script>
+</body>
+</html>

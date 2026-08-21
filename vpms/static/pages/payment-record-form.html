@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS — Record Payment</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+  <link rel="stylesheet" href="/static/css/components.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+        <div id="banner-success" class="banner-success" style="display: none;"></div>
+
+        <h1>Record Payment</h1>
+
+        <div class="card">
+          <h2>Invoice</h2>
+          <div id="invoice-fields">Loading&hellip;</div>
+        </div>
+
+        <div class="card" id="form-card" style="display: none;">
+          <h2>Payment Details</h2>
+          <form id="payment-form">
+            <label for="tds_section">TDS Section</label>
+            <input type="text" id="tds_section" required />
+
+            <label for="tds_rate">TDS Rate (%)</label>
+            <input type="number" id="tds_rate" step="0.01" min="0" required />
+
+            <div id="override-reason-area" style="display: none;">
+              <label for="tds_override_reason">Override Reason (required)</label>
+              <textarea id="tds_override_reason"></textarea>
+            </div>
+
+            <div class="summary-row"><span class="summary-label">Gross Amount</span><span class="summary-value" id="preview-gross">&mdash;</span></div>
+            <div class="summary-row"><span class="summary-label">TDS Amount</span><span class="summary-value" id="preview-tds">&mdash;</span></div>
+            <div class="summary-row"><span class="summary-label">Net Payable Amount</span><span class="summary-value" id="preview-net">&mdash;</span></div>
+
+            <label for="payment_mode">Payment Mode</label>
+            <select id="payment_mode" required>
+              <option value="NEFT">NEFT</option>
+              <option value="RTGS">RTGS</option>
+              <option value="IMPS">IMPS</option>
+              <option value="UPI">UPI</option>
+              <option value="Cheque">Cheque</option>
+            </select>
+
+            <label for="company_bank_account">Company Bank Account</label>
+            <input type="text" id="company_bank_account" required />
+
+            <label for="payment_date">Payment Date</label>
+            <input type="date" id="payment_date" required />
+
+            <label for="utr_reference">UTR Reference</label>
+            <input type="text" id="utr_reference" required />
+
+            <div class="checkbox-row">
+              <input type="checkbox" id="itc_eligible" />
+              <label for="itc_eligible">ITC Eligible</label>
+            </div>
+
+            <div class="error-text" id="form-error"></div>
+            <button type="submit" class="btn-primary">Record Payment</button>
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/payment-record-form.js"></script>
+</body>
+</html>

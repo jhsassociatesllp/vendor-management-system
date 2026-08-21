@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS Vendor Portal — Submit Invoice</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+  <link rel="stylesheet" href="/static/css/components.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS Vendor Portal</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+        <div id="banner-success" class="banner-success" style="display: none;"></div>
+
+        <h1>Submit Invoice</h1>
+
+        <div class="step-indicator">
+          <div class="step-indicator__item" data-step="1">1. Select PO / Agreement</div>
+          <div class="step-indicator__item" data-step="2">2. Amounts</div>
+          <div class="step-indicator__item" data-step="3">3. Details</div>
+          <div class="step-indicator__item" data-step="4">4. Documents</div>
+          <div class="step-indicator__item" data-step="5">5. Review &amp; Submit</div>
+        </div>
+
+        <div class="card">
+          <!-- Step 1 -->
+          <section class="form-step" id="step-1">
+            <h2>Select PO or Agreement</h2>
+
+            <div class="checkbox-row">
+              <input type="radio" name="billing-mode" id="mode-po" value="po" checked />
+              <label for="mode-po">Bill against a Purchase Order</label>
+            </div>
+            <div class="checkbox-row">
+              <input type="radio" name="billing-mode" id="mode-agreement" value="agreement" />
+              <label for="mode-agreement">Bill against an Agreement (non-PO billing)</label>
+            </div>
+
+            <div id="po-picker">
+              <label for="po_id">Purchase Order</label>
+              <select id="po_id">
+                <option value="">Loading&hellip;</option>
+              </select>
+              <div id="po-balance-area"></div>
+            </div>
+
+            <div id="agreement-picker" style="display: none;">
+              <label for="agreement_id">Agreement</label>
+              <select id="agreement_id">
+                <option value="">Loading&hellip;</option>
+              </select>
+
+              <label for="item_code_id">Item Code</label>
+              <select id="item_code_id" disabled>
+                <option value="">Select an agreement first&hellip;</option>
+              </select>
+            </div>
+
+            <div class="error-text" id="step1-error"></div>
+          </section>
+
+          <!-- Step 2 -->
+          <section class="form-step" id="step-2">
+            <h2>Amounts</h2>
+
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" min="0.01" step="0.01" />
+
+            <label for="rate">Rate (INR)</label>
+            <input type="number" id="rate" min="0.01" step="0.01" />
+
+            <div class="field-row"><span class="field-label">Taxable Amount</span><span class="field-value" id="taxable-display">&mdash;</span></div>
+
+            <h3>GST Breakup</h3>
+            <label for="cgst_amount">CGST (INR)</label>
+            <input type="number" id="cgst_amount" min="0" step="0.01" value="0" />
+
+            <label for="sgst_amount">SGST (INR)</label>
+            <input type="number" id="sgst_amount" min="0" step="0.01" value="0" />
+
+            <label for="igst_amount">IGST (INR)</label>
+            <input type="number" id="igst_amount" min="0" step="0.01" value="0" />
+
+            <div class="banner-error" id="gst-warning" style="display: none;"></div>
+
+            <div class="field-row"><span class="field-label">Total Invoice Amount</span><span class="field-value" id="total-display">&mdash;</span></div>
+
+            <div class="error-text" id="step2-error"></div>
+          </section>
+
+          <!-- Step 3 -->
+          <section class="form-step" id="step-3">
+            <h2>Details</h2>
+
+            <label for="invoice_number">Your Invoice Number</label>
+            <input type="text" id="invoice_number" placeholder="Your own invoice numbering, e.g. INV-2026-0042" />
+            <div class="hint">Must be unique among your own invoices — a duplicate will be blocked at submission.</div>
+
+            <label for="invoice_date">Invoice Date</label>
+            <input type="date" id="invoice_date" />
+
+            <label for="period_service_from">Period of Service &mdash; From</label>
+            <input type="date" id="period_service_from" />
+
+            <label for="period_service_to">Period of Service &mdash; To</label>
+            <input type="date" id="period_service_to" />
+
+            <label for="work_description">Work Description</label>
+            <textarea id="work_description"></textarea>
+
+            <div id="milestone-picker" style="display: none;">
+              <label for="billing_milestone_id">Billing Milestone (required &mdash; this agreement bills by milestone)</label>
+              <select id="billing_milestone_id">
+                <option value="">Select a milestone&hellip;</option>
+              </select>
+            </div>
+
+            <div class="error-text" id="step3-error"></div>
+          </section>
+
+          <!-- Step 4 -->
+          <section class="form-step" id="step-4">
+            <h2>Documents</h2>
+            <p class="hint">Uploading the first document here creates the invoice draft.</p>
+            <div id="documents-area"></div>
+            <div class="error-text" id="step4-error"></div>
+          </section>
+
+          <!-- Step 5 -->
+          <section class="form-step" id="step-5">
+            <h2>Review &amp; Submit</h2>
+            <p class="hint"><strong>This is the point of no return</strong> &mdash; once submitted, the invoice becomes read-only.</p>
+            <div id="review-area"></div>
+            <div class="error-text" id="step5-error"></div>
+            <button type="button" class="btn-primary" id="final-submit-button">Submit Invoice</button>
+          </section>
+
+          <div class="step-nav">
+            <button type="button" class="btn-secondary" id="back-button" style="display: none;">Back</button>
+            <button type="button" class="btn-primary" id="next-button">Next</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/vendor-invoice-submit.js"></script>
+</body>
+</html>

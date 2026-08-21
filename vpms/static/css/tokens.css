@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* Color palette (Section 2) */
+  --color-primary: #2B4570;
+  --color-primary-hover: #1F3355;
+  --color-surface: #FFFFFF;
+  --color-background: #F5F7FA;
+  --color-text: #1A2233;
+  --color-text-muted: #667085;
+  --color-border: #E2E6EC;
+
+  --color-success: #1B7F5C;
+  --color-success-bg: #E6F4EF;
+  --color-warning: #B7791F;
+  --color-warning-bg: #FBF0DD;
+  --color-danger: #B42318;
+  --color-danger-hover: #942018;
+  --color-danger-bg: #FDECEA;
+  --color-on-primary: #FFFFFF;
+
+  /* Typography */
+  --font-heading: 'Manrope', -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-body: 'Inter', -apple-system, "Segoe UI", Arial, sans-serif;
+
+  --text-size-1: 28px;
+  --text-size-2: 20px;
+  --text-size-3: 16px;
+  --text-size-4: 14px;
+  --text-size-5: 12px;
+
+  /* Spacing scale (Section 2) */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+
+  /* Shared structural values */
+  --radius-card: 8px;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --sidebar-width: 240px;
+  --topbar-height: 64px;
+}

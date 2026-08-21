@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS — Invoice Approval</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+  <link rel="stylesheet" href="/static/css/components.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+        <div id="banner-success" class="banner-success" style="display: none;"></div>
+
+        <div class="card">
+          <h1>Invoice Approval</h1>
+          <div id="timeline-area">Loading&hellip;</div>
+          <div id="detail-fields"></div>
+        </div>
+
+        <div class="card" id="query-card" style="display: none;">
+          <h2>Queries</h2>
+          <div id="query-area"></div>
+        </div>
+
+        <div class="card" id="action-card" style="display: none;">
+          <h2>Take Action</h2>
+          <div id="action-area"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/invoice-approval-detail.js"></script>
+</body>
+</html>

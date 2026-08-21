@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS — New Vendor Request</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div class="card">
+          <h1>New Vendor Request</h1>
+          <div id="banner-error" class="banner-error" style="display: none;"></div>
+          <div id="banner-success" class="banner-success" style="display: none;"></div>
+
+          <form id="request-form">
+            <label for="business_need">Business Need</label>
+            <textarea id="business_need" required></textarea>
+            <div class="error-text" id="err-business_need"></div>
+
+            <label for="category">Category</label>
+            <select id="category" required>
+              <option value="">Select a category&hellip;</option>
+              <option>Professional Services</option>
+              <option>IT / Software</option>
+              <option>Facilities &amp; Maintenance</option>
+              <option>Office Supplies</option>
+              <option>Catering</option>
+              <option>Logistics &amp; Transportation</option>
+              <option>Marketing &amp; Advertising</option>
+              <option>Consulting</option>
+              <option>Other</option>
+            </select>
+            <div class="error-text" id="err-category"></div>
+
+            <label for="estimated_annual_spend">Estimated Annual Spend (INR)</label>
+            <input type="number" id="estimated_annual_spend" min="0" step="0.01" required />
+            <div class="error-text" id="err-estimated_annual_spend"></div>
+
+            <label for="recommended_vendor_name">Recommended Vendor Name</label>
+            <input type="text" id="recommended_vendor_name" required />
+            <div class="error-text" id="err-recommended_vendor_name"></div>
+
+            <label for="recommended_pan">Recommended Vendor PAN</label>
+            <input type="text" id="recommended_pan" placeholder="ABCDE1234F" maxlength="10" required />
+            <div class="error-text" id="err-recommended_pan"></div>
+
+            <label for="recommended_gstin">Recommended Vendor GSTIN (optional)</label>
+            <input type="text" id="recommended_gstin" placeholder="27ABCDE1234F1Z5" maxlength="15" />
+            <div class="error-text" id="err-recommended_gstin"></div>
+
+            <h2 style="margin-top: 1.5rem;">Evaluation Checklist</h2>
+
+            <div class="checkbox-row">
+              <input type="checkbox" id="financial_stability_ok" required />
+              <label for="financial_stability_ok">Financial stability confirmed</label>
+            </div>
+
+            <div class="checkbox-row">
+              <input type="checkbox" id="technical_capability_ok" required />
+              <label for="technical_capability_ok">Technical capability confirmed</label>
+            </div>
+
+            <div class="checkbox-row">
+              <input type="checkbox" id="compliance_status_ok" required />
+              <label for="compliance_status_ok">Compliance status confirmed</label>
+            </div>
+
+            <div class="checkbox-row">
+              <input type="checkbox" id="blacklist_check_ok" required />
+              <label for="blacklist_check_ok">Blacklist check passed</label>
+            </div>
+
+            <div class="checkbox-row">
+              <input type="checkbox" id="conflict_of_interest_declared" required />
+              <label for="conflict_of_interest_declared">Conflict of interest declared</label>
+            </div>
+
+            <div class="checkbox-row">
+              <input type="checkbox" id="references_provided" />
+              <label for="references_provided">References provided (recommended, not mandatory)</label>
+            </div>
+
+            <div class="checkbox-row" style="margin-top: 1.5rem;">
+              <input type="checkbox" id="is_msme" />
+              <label for="is_msme">Vendor claims MSME status?</label>
+            </div>
+
+            <label for="msme_udyam_number">MSME / Udyam Number</label>
+            <input type="text" id="msme_udyam_number" disabled />
+            <div class="error-text" id="err-msme_udyam_number"></div>
+
+            <button type="submit" class="btn-primary">Submit Request</button>
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/vendor-request-form.js"></script>
+</body>
+</html>

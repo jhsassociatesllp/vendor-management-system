@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS — Purchase Orders</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+  <link rel="stylesheet" href="/static/css/components.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h1>Purchase Orders</h1>
+          <a href="/static/pages/po-create.html" class="btn-primary" id="new-po-link" style="display: none; text-decoration: none;">New Purchase Order</a>
+        </div>
+
+        <div class="card">
+          <label for="status-filter">Filter by Status</label>
+          <select id="status-filter">
+            <option value="">All statuses</option>
+            <option value="Pending_Approval">Pending Approval</option>
+            <option value="Approved">Approved</option>
+            <option value="Vendor_Acknowledged">Vendor Acknowledged</option>
+            <option value="Rejected">Rejected</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="Lapsed">Lapsed</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+
+        <div class="card">
+          <table>
+            <thead>
+              <tr>
+                <th>PO Number</th>
+                <th>Vendor</th>
+                <th>Item</th>
+                <th>Total Value</th>
+                <th>Status</th>
+                <th>Budget Head</th>
+              </tr>
+            </thead>
+            <tbody id="po-body">
+              <tr><td colspan="6">Loading&hellip;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/po-list.js"></script>
+</body>
+</html>

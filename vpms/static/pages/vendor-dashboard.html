@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS Vendor Portal — Dashboard</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS Vendor Portal</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+
+        <h1 id="greeting">Welcome</h1>
+
+        <div class="card-grid">
+          <div class="card">
+            <h2>Profile Completion</h2>
+            <div class="progress-ring-wrap">
+              <div id="progress-ring-holder">Loading&hellip;</div>
+              <div>
+                <div class="progress-ring-caption" id="progress-caption">Loading your KYC status&hellip;</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Quick Links</h2>
+            <a href="/static/pages/vendor-kyc-upload.html">Upload Documents</a><br /><br />
+            <a href="/static/pages/vendor-bank-change.html">Request Bank Change</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>KYC Document Checklist</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Document</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="checklist-body">
+              <tr><td colspan="3">Loading&hellip;</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h2>Recent Notifications</h2>
+          <div id="notifications-preview">Loading&hellip;</div>
+          <div class="hint"><a href="/static/pages/vendor-notifications.html">View all notifications</a></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/vendor-dashboard.js"></script>
+</body>
+</html>

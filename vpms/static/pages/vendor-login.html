@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS Vendor Portal — Login</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .login-card {
+      width: 100%;
+      max-width: 380px;
+    }
+    .login-brand {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: var(--text-size-2);
+      color: var(--color-primary);
+      text-align: center;
+      margin-bottom: var(--space-1);
+    }
+    .login-subtitle {
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: var(--text-size-4);
+      margin-bottom: var(--space-3);
+    }
+    .otp-input {
+      letter-spacing: 0.5em;
+      text-align: center;
+      font-size: var(--text-size-2);
+      font-family: var(--font-heading);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card card">
+    <div class="login-brand">VPMS Vendor Portal</div>
+    <div class="login-subtitle">Sign in to manage your vendor profile</div>
+
+    <div id="banner-error" class="banner-error" style="display: none;"></div>
+    <div id="otp-dev-banner" class="banner-success" style="display: none;"></div>
+
+    <form id="step1-form">
+      <label for="email">Email</label>
+      <input type="email" id="email" required autocomplete="username" />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required autocomplete="current-password" />
+
+      <button type="submit" class="btn-primary" id="step1-submit">Continue</button>
+    </form>
+
+    <form id="step2-form" style="display: none;">
+      <label for="otp">Enter the 6-digit code</label>
+      <input type="text" id="otp" class="otp-input" maxlength="6" inputmode="numeric" required />
+      <div class="hint">Code expires in a few minutes.</div>
+
+      <button type="submit" class="btn-primary">Verify &amp; Sign In</button>
+      <button type="button" class="btn-secondary" id="back-button">Back</button>
+    </form>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/vendor-login.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* JHS brand palette: navy #033068 primary, crimson #D51F49 accent. Replaces the
+       old static site's slate-blue (#2B4570) placeholder — everything else here still
+       traces back to tokens.css's structure, just re-pointed at the real brand colors.
+       No dark-mode block: the old site never had one either. */
+    --primary: 213 94% 21%;
+    --primary-hover: 220 100% 16%;
+    --primary-foreground: 0 0% 100%;
+
+    --brand-accent: 346 75% 48%;
+    --brand-accent-foreground: 0 0% 100%;
+
+    --background: 216 33% 97%;
+    --foreground: 221 32% 15%;
+
+    --surface: 0 0% 100%;
+    --card: 0 0% 100%;
+    --card-foreground: 221 32% 15%;
+
+    --muted: 216 33% 97%;
+    --muted-foreground: 221 13% 46%;
+
+    --border: 216 21% 91%;
+    --input: 216 21% 91%;
+    --ring: 213 94% 21%;
+
+    --success: 159 65% 30%;
+    --success-bg: 159 39% 93%;
+    --warning: 36 71% 42%;
+    --warning-bg: 38 79% 93%;
+    --destructive: 4 76% 40%;
+    --destructive-hover: 4 72% 34%;
+    --destructive-foreground: 0 0% 100%;
+    --danger-bg: 6 83% 95%;
+
+    --secondary: 216 33% 97%;
+    --secondary-foreground: 221 32% 15%;
+    --accent: 216 33% 97%;
+    --accent-foreground: 221 32% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 221 32% 15%;
+
+    --radius: 0.5rem;
+
+    --sidebar-width: 240px;
+    --topbar-height: 64px;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body;
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading font-semibold;
+  }
+}

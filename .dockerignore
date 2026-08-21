@@ -1,0 +1,16 @@
+# Backend
+vpms/.venv/
+vpms/__pycache__/
+vpms/**/__pycache__/
+vpms/.pytest_cache/
+vpms/uploads/
+vpms/*.log
+
+# Frontend
+vpms-frontend/node_modules/
+vpms-frontend/dist/
+
+# Misc
+.git/
+**/*.pyc
+.DS_Store

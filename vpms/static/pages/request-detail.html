@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS — Request Detail</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+        <div id="banner-success" class="banner-success" style="display: none;"></div>
+
+        <div class="card">
+          <h1>Vendor Request Detail</h1>
+          <div id="detail-fields">Loading&hellip;</div>
+        </div>
+
+        <div class="card" id="action-card" style="display: none;">
+          <h2>Actions</h2>
+          <div id="action-area"></div>
+        </div>
+
+        <div class="card" id="vendor-card" style="display: none;">
+          <h2>Vendor</h2>
+          <div id="vendor-area"></div>
+        </div>
+
+        <div class="card" id="item-code-card" style="display: none;">
+          <h2>Link Item Codes</h2>
+          <div id="item-code-area"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/accounts-review.js"></script>
+  <script src="/static/js/partner-approval.js"></script>
+  <script src="/static/js/request-detail.js"></script>
+</body>
+</html>

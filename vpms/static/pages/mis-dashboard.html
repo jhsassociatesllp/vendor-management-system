@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VPMS — MIS Dashboard</title>
+  <link rel="stylesheet" href="/static/css/tokens.css" />
+  <link rel="stylesheet" href="/static/css/app-shell.css" />
+  <link rel="stylesheet" href="/static/css/components.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__brand">VPMS</div>
+      <nav class="app-sidebar__nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="app-main">
+      <header class="app-topbar" id="topbar"></header>
+      <main class="app-content">
+        <div id="banner-error" class="banner-error" style="display: none;"></div>
+
+        <h1>MIS Dashboard</h1>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="kpi-card__value" id="kpi-total-payables">&mdash;</div>
+            <div class="kpi-card__label">Total Payables</div>
+          </div>
+          <div class="card">
+            <div class="kpi-card__value" id="kpi-overdue">&mdash;</div>
+            <div class="kpi-card__label">Overdue Invoices</div>
+          </div>
+          <div class="card">
+            <div class="kpi-card__value" id="kpi-msme-risk">&mdash;</div>
+            <div class="kpi-card__label">MSME Risk Count</div>
+          </div>
+          <div class="card">
+            <div class="kpi-card__value" id="kpi-budget-util">&mdash;</div>
+            <div class="kpi-card__label">Budget Utilization</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Aging</h2>
+          <div class="hint">Click a bar to see the invoices in that bucket.</div>
+          <div class="chart-container"><canvas id="aging-chart"></canvas></div>
+          <div id="aging-drilldown"></div>
+        </div>
+
+        <div class="card">
+          <h2>Spend by Category</h2>
+          <div class="filter-panel">
+            <div class="filter-field">
+              <label for="filter-vendor">Vendor</label>
+              <select id="filter-vendor"><option value="">All vendors</option></select>
+            </div>
+            <div class="filter-field">
+              <label for="filter-department">Department</label>
+              <select id="filter-department"><option value="">All departments</option></select>
+            </div>
+            <div class="filter-field">
+              <label for="filter-date-from">Period From</label>
+              <input type="date" id="filter-date-from" />
+            </div>
+            <div class="filter-field">
+              <label for="filter-date-to">Period To</label>
+              <input type="date" id="filter-date-to" />
+            </div>
+            <div class="filter-field">
+              <button type="button" class="btn-primary" id="apply-filters-button">Apply Filters</button>
+            </div>
+          </div>
+          <div style="margin-top: 8px;">
+            <button type="button" class="btn-secondary" id="period-this-month">This Month</button>
+            <button type="button" class="btn-secondary" id="period-last-month">Last Month</button>
+          </div>
+          <div class="hint">Bars show the selected period vs. the immediately preceding period of equal length. Click a bar to isolate that category.</div>
+          <div class="chart-container"><canvas id="spend-chart"></canvas></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/mis-dashboard.js"></script>
+</body>
+</html>
