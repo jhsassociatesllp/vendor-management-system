@@ -1,7 +1,7 @@
 name: Deploy to staging
 
 # Pushes to `staging` deploy here, into a separate checkout/port from production (see
-# deploy-production.yml). Push your work to `staging` first, confirm it on port 9020,
+# deploy-production.yml). Push your work to `staging` first, confirm it on port 8010,
 # then merge to `main` when it's ready for production.
 on:
   push:

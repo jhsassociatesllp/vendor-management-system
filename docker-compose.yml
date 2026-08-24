@@ -37,7 +37,7 @@ services:
       JWT_ALGORITHM: HS256
       ACCESS_TOKEN_EXPIRE_MINUTES: 60
     ports:
-      - "${APP_PORT:?Set APP_PORT in .env — 9010 for production, 9020 for staging}:8060"
+      - "${APP_PORT:?Set APP_PORT in .env — 8020 for production, 8010 for staging}:8060"
     volumes:
       - vpms_uploads:/app/vpms/uploads
 
