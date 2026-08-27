@@ -43,6 +43,7 @@ import { MisDashboardPage } from '@/features/mis/MisDashboardPage'
 import { ReportsPage } from '@/features/mis/ReportsPage'
 import { ReportViewerPage } from '@/features/mis/ReportViewerPage'
 import { AuditTrailPage } from '@/features/mis/AuditTrailPage'
+import { UserManagementPage } from '@/features/admin/UserManagementPage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -109,6 +110,10 @@ function AppRoutes() {
           <Route path={ROUTES.reports} element={<ReportsPage />} />
           <Route path={ROUTES.reportViewer} element={<ReportViewerPage />} />
           <Route path={ROUTES.auditTrail} element={<AuditTrailPage />} />
+
+          <Route path={ROUTES.userManagement} element={<ProtectedRoute roles={['System Admin']} />}>
+            <Route index element={<UserManagementPage />} />
+          </Route>
         </Route>
       </Route>
 

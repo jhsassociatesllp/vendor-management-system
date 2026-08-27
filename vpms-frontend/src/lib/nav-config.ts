@@ -48,6 +48,9 @@ export const ROUTES = {
   reports: '/reports',
   reportViewer: '/report-viewer',
   auditTrail: '/audit-trail',
+
+  // Admin
+  userManagement: '/user-management',
 } as const
 
 export interface NavItem {
@@ -140,6 +143,7 @@ export const NAV_BY_ROLE: Record<string, NavItem[]> = {
     { label: 'Reports', href: ROUTES.reports },
     { label: 'Audit Trail', href: ROUTES.auditTrail },
     { label: 'Notifications', href: ROUTES.vendorNotifications },
+    { label: 'User Management', href: ROUTES.userManagement },
   ],
   Vendor: [
     { label: 'Dashboard', href: ROUTES.vendorDashboard },
