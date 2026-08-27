@@ -37,6 +37,10 @@ def list_all(db: Session) -> list[User]:
     return db.query(User).options(joinedload(User.role)).filter(User.is_active.is_(True)).all()
 
 
+def list_all_including_inactive(db: Session) -> list[User]:
+    return db.query(User).options(joinedload(User.role)).order_by(User.name).all()
+
+
 def list_by_role_name(db: Session, role_name: str) -> list[User]:
     return (
         db.query(User)
