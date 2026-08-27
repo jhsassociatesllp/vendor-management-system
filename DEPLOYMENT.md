@@ -55,66 +55,22 @@ docker compose version
 sudo usermod -aG docker $USER   # log out/in after this if you added yourself
 ```
 
-## 3. Deploy key + directories
+## 3. Deploy key
 
 ```bash
 mkdir -p ~/.ssh && chmod 700 ~/.ssh
 echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSsXkpbzNd1RZNd0HraMItPSR3nFYIikWh+l2RboUPM github-actions-deploy@vpms" >> ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
-
-mkdir -p ~/apps
 ```
 
-## 4. Clone both checkouts
-
-Once your GitHub repo exists and has a `staging` branch:
-
-```bash
-cd ~/apps
-git clone -b main    <your-repo-url> vpms-production
-git clone -b staging <your-repo-url> vpms-staging
-```
-
-### Configure each environment
-
-```bash
-cd ~/apps/vpms-production
-cp .env.example .env
-nano .env   # DB_PASSWORD, JWT_SECRET_KEY (generation commands are in .env.example), APP_PORT=8020
-chmod +x deploy.sh
-
-cd ~/apps/vpms-staging
-cp .env.example .env
-nano .env   # DIFFERENT DB_PASSWORD and JWT_SECRET_KEY from production, APP_PORT=8010
-chmod +x deploy.sh
-```
-
-Use **different** secrets in each `.env` — staging and production should never share a
-database password or JWT signing key.
-
-### First manual deploy (before wiring up Actions)
-
-```bash
-cd ~/apps/vpms-production && ./deploy.sh
-cd ~/apps/vpms-staging    && ./deploy.sh
-```
-
-Confirm both come up: `curl http://localhost:8020/health` and `curl http://localhost:8010/health`
-should each return `{"status":"ok"}`.
-
-**The database starts empty on both** — no seeded test accounts. See "First admin user"
-below before you can log in.
-
-### See it in aaPanel
-
-Docker plugin → Compose (or "Container Manage" / "Compose Manage", depending on your
-version) → Import, pointing at `~/apps/vpms-production/docker-compose.yml` (and the
-staging one separately). This just gives you a UI over the same containers/logs/restart
-controls — it doesn't change how they got deployed.
+That's it for the VM side — **the workflows below bootstrap everything else themselves**:
+cloning the repo into `~/apps/vpms-production` / `~/apps/vpms-staging` on their first run,
+and writing each directory's `.env` from GitHub secrets if it isn't already there. There's
+nothing left to clone or configure by hand.
 
 ---
 
-## 5. GitHub repo setup
+## 4. GitHub repo setup
 
 ```bash
 cd "D:\Vasu\JHS Projects\Vendor Management System - v2"
@@ -131,18 +87,41 @@ add:
 - `SSH_PRIVATE_KEY` — full contents of the private key file Claude sent you (the whole
   `-----BEGIN...-----`/`-----END...-----` block)
 - `SSH_PORT` — only if the VM's SSH runs on something other than 22
+- `PROD_DB_PASSWORD` and `PROD_JWT_SECRET_KEY` — generate with `openssl rand -base64 24`
+  and `openssl rand -base64 48` respectively
+- `STAGING_DB_PASSWORD` and `STAGING_JWT_SECRET_KEY` — generate **different** values than
+  production's, same commands
 
-That's the whole CI/CD setup — `.github/workflows/deploy-production.yml` and
-`deploy-staging.yml` are already in the repo and pick these secrets up automatically.
+That's the whole setup. Push to `staging` → GitHub Actions SSHes in, clones the repo into
+`~/apps/vpms-staging` if it's not there yet, writes `.env` from the two `STAGING_*` secrets
+if one doesn't exist yet, then builds and starts the stack. Merge `staging` into `main` →
+the same thing happens in `~/apps/vpms-production`, using the `PROD_*` secrets and port
+8020. Both are also runnable on-demand from the Actions tab (`workflow_dispatch`) without a
+new commit — useful for the very first deploy, so you don't have to wait for a commit to
+see it work.
 
-From here: push to `staging` → GitHub Actions SSHes in and runs `deploy.sh` in
-`~/apps/vpms-staging`. Merge `staging` into `main` → same thing in `~/apps/vpms-production`.
-Both are also runnable on-demand from the Actions tab (`workflow_dispatch`) without a new
-commit.
+**If your repo is private**, the plain `https://github.com/...` clone the workflow uses
+will fail with an authentication error on first run (not "repository not found" — that's
+the tell). Tell me if you hit that; it needs a second, read-only deploy key on the repo
+itself (Settings → Deploy keys), separate from the SSH key above.
+
+Confirm it worked: `curl http://<VM_IP>:8020/health` and `curl http://<VM_IP>:8010/health`
+should each return `{"status":"ok"}` once the first run of each workflow finishes.
+
+**The database starts empty on both** — no seeded test accounts. See "First admin user"
+below before you can log in.
+
+### See it in aaPanel
+
+Once both have deployed at least once: Docker plugin → Compose (or "Container Manage" /
+"Compose Manage", depending on your version) → Import, pointing at
+`~/apps/vpms-production/docker-compose.yml` (and the staging one separately). This just
+gives you a UI over the same containers/logs/restart controls — it doesn't change how they
+got deployed.
 
 ---
 
-## 6. First admin user
+## 5. First admin user
 
 Neither database is seeded with any user — you need one real System Admin account before
 anyone can log in. This isn't automated yet; for now, generate a bcrypt hash and insert it
@@ -172,7 +151,7 @@ development anywhere near a real deployment.
 
 ---
 
-## 7. Later: domain + subdomains via aaPanel
+## 6. Later: domain + subdomains via aaPanel
 
 When you have a domain, aaPanel's Website manager does the reverse proxy + SSL work you'd
 otherwise hand-write in nginx:

@@ -3,6 +3,11 @@ name: Deploy to staging
 # Pushes to `staging` deploy here, into a separate checkout/port from production (see
 # deploy-production.yml). Push your work to `staging` first, confirm it on port 8010,
 # then merge to `main` when it's ready for production.
+#
+# Fully self-bootstrapping: if ~/apps/vpms-staging doesn't exist yet on the VM, this
+# clones it and writes .env from the secrets below on its own — no manual SSH setup
+# needed beyond the deploy key and firewall/network access already in place. Once the
+# directory exists, later runs just pull and redeploy in place (deploy.sh's normal job).
 on:
   push:
     branches: [staging]
@@ -14,11 +19,40 @@ jobs:
     steps:
       - name: Deploy over SSH
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          REPO_URL: https://github.com/${{ github.repository }}.git
+          DB_PASSWORD: ${{ secrets.STAGING_DB_PASSWORD }}
+          JWT_SECRET_KEY: ${{ secrets.STAGING_JWT_SECRET_KEY }}
+          APP_PORT: "8010"
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT || 22 }}
+          envs: REPO_URL,DB_PASSWORD,JWT_SECRET_KEY,APP_PORT
           script: |
-            cd ~/apps/vpms-staging
+            set -e
+            DIR=~/apps/vpms-staging
+
+            if [ ! -d "$DIR/.git" ]; then
+              echo "First run — cloning into $DIR"
+              mkdir -p ~/apps
+              git clone -b staging "$REPO_URL" "$DIR"
+            fi
+
+            cd "$DIR"
+
+            if [ ! -f .env ]; then
+              echo "No .env yet — writing one from GitHub secrets"
+              cat > .env <<ENVEOF
+            DB_USER=vpms
+            DB_PASSWORD=${DB_PASSWORD}
+            DB_NAME=vpms
+            JWT_SECRET_KEY=${JWT_SECRET_KEY}
+            APP_PORT=${APP_PORT}
+            ENVEOF
+              chmod 600 .env
+            fi
+
+            chmod +x deploy.sh
             ./deploy.sh
