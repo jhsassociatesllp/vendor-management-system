@@ -42,6 +42,7 @@ TEST_USERS = [
     {"name": "Auditor User", "email": "auditor@test.com", "password": "password123", "role": "Compliance / Audit"},
 ]
 
+
 # SRS §2.2's four indicative amount slabs. l4_role uses "Finance Team" throughout since
 # that's the only Finance-ish role actually seeded (see README's Phase 4A flagged notes).
 DOA_MATRIX_SEED = [
